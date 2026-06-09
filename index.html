@@ -242,13 +242,63 @@
     .hero-foot .lede{color:#2f3a28 !important}
   }
 
-  /* Fixed light backdrop behind everything — last line of defence against any
-     browser that darkens the page surface. Sits behind all content. */
+  /* ---- INDEX NAV ---- */
+  .index-nav{background:var(--paper-2);border-bottom:2px solid var(--ink);padding:0}
+  .index-inner{display:flex;align-items:stretch;flex-wrap:wrap;gap:0}
+  .index-head{padding:18px 28px;font-family:'Archivo Narrow';text-transform:uppercase;
+    letter-spacing:.28em;font-size:.7rem;font-weight:700;color:var(--muted);
+    border-right:1px solid var(--line);white-space:nowrap;display:flex;align-items:center}
+  .index-links{display:flex;flex-wrap:wrap;gap:0;flex:1}
+  .index-links a{display:flex;align-items:center;gap:8px;padding:16px 22px;
+    text-decoration:none;color:var(--body);font-family:'Mulish',sans-serif;
+    font-size:.88rem;font-weight:500;border-right:1px solid var(--line);
+    transition:background .15s,color .15s;white-space:nowrap}
+  .index-links a:hover{background:var(--rioja);color:#faf9f6}
+  .index-links a .idx-n{font-family:'Archivo Narrow';font-size:.68rem;font-weight:700;
+    color:var(--gold);letter-spacing:.12em;min-width:18px}
+  .index-links a:hover .idx-n{color:rgba(250,249,246,.7)}
+
+  /* ---- MAP SECTION ---- */
+  .mapsec{border-bottom:2px solid var(--ink);background:var(--paper)}
+  .mapsec .wrap{padding-top:60px;padding-bottom:0}
+  #trip-map{width:100%;height:480px;border:1.5px solid var(--line);
+    border-radius:3px;margin-top:28px;z-index:2;position:relative}
+  .map-legend{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:18px;
+    padding-bottom:54px;font-family:'Archivo Narrow';font-size:.78rem;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+  .map-legend span{display:flex;align-items:center;gap:8px}
+  .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .dot.stop{background:var(--rioja)}
+  .dot.sight{background:var(--sea)}
+  .dot.surf{background:#5c8c5a}
+
+  @media(max-width:780px){
+    .index-head{display:none}
+    .index-links a{padding:12px 16px;font-size:.82rem}
+    #trip-map{height:320px}
+  }
+  /* Fixed light backdrop behind everything */
   #lightbackdrop{position:fixed;inset:0;background:#faf9f6;z-index:-1;pointer-events:none}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 </head>
 <body>
 <div id="lightbackdrop"></div>
+
+<!-- INDEX NAV -->
+<nav class="index-nav" id="top">
+  <div class="wrap index-inner">
+    <div class="index-head">Contents</div>
+    <div class="index-links">
+      <a href="#map-section"><span class="idx-n">00</span>Map Overview</a>
+      <a href="#overview"><span class="idx-n">01</span>Flights &amp; Shape</a>
+      <a href="#itinerary"><span class="idx-n">02</span>Itinerary</a>
+      <a href="#surf-section"><span class="idx-n">03</span>Surf Spots</a>
+      <a href="#budget-section"><span class="idx-n">04</span>Budget</a>
+      <a href="#tips-section"><span class="idx-n">05</span>Tips</a>
+    </div>
+  </div>
+</nav>
 
 <!-- HERO -->
 <header class="hero">
@@ -276,8 +326,22 @@
   <div class="route-tag">Bilbao · Rioja · Donostia</div>
 </header>
 
+<!-- MAP OVERVIEW -->
+<section class="mapsec" id="map-section">
+  <div class="wrap">
+    <div class="sec-label">Trip Overview</div>
+    <h2>Three stops, <em>270 km</em>, five days.</h2>
+    <div id="trip-map"></div>
+    <div class="map-legend">
+      <span><div class="dot stop"></div> Base stop</span>
+      <span><div class="dot sight"></div> Sight / winery</span>
+      <span><div class="dot surf"></div> Surf spot</span>
+    </div>
+  </div>
+</section>
+
 <!-- OVERVIEW + FLIGHTS -->
-<section class="overview">
+<section class="overview" id="overview">
   <div class="wrap ov-grid">
     <div>
       <div class="sec-label">The Shape of It</div>
@@ -351,7 +415,7 @@
 </div>
 
 <!-- DAYS -->
-<section>
+<section id="itinerary">
   <div class="wrap">
     <div class="sec-label">The Itinerary</div>
 
@@ -445,7 +509,7 @@
 </section>
 
 <!-- SURF CALLOUT -->
-<section class="surf">
+<section class="surf" id="surf-section">
   <div class="wrap">
     <div class="sec-label">The Waves — Beginner Only</div>
     <h2>Summer is the <em>right</em> time to learn here.</h2>
@@ -471,7 +535,7 @@
 </section>
 
 <!-- BUDGET -->
-<section class="budget">
+<section class="budget" id="budget-section">
   <div class="wrap">
     <div class="sec-label">What It Costs</div>
     <h2>Per person, <em>five days</em></h2>
@@ -488,7 +552,7 @@
 </section>
 
 <!-- TIPS -->
-<section>
+<section id="tips-section">
   <div class="wrap">
     <div class="sec-label">Before You Go</div>
     <h2>Six things <em>worth knowing</em></h2>
@@ -515,5 +579,91 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+  var map = L.map('trip-map', {
+    center: [43.05, -2.45],
+    zoom: 8,
+    scrollWheelZoom: false
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  // custom marker factory
+  function pin(color, size){
+    size = size || 14;
+    return L.divIcon({
+      className:'',
+      html: '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+color+';border:2.5px solid #faf9f6;box-shadow:0 1px 5px rgba(0,0,0,.35)"></div>',
+      iconSize:[size,size], iconAnchor:[size/2,size/2]
+    });
+  }
+
+  var stopColor  = '#2d4a2b';  // forest green  — base stops
+  var sightColor = '#5c6a4f';  // sage           — sights/wineries
+  var surfColor  = '#5c8c5a';  // lighter green  — surf spots
+
+  // ---- BASE STOPS (large) ----
+  var stops = [
+    [43.2595, -2.9238, 'Bilbao — Stop 01',     'Casco Viejo · 2 nights · pintxos & Guggenheim',  'https://www.google.com/maps/search/?api=1&query=Casco%20Viejo%20Bilbao'],
+    [42.5420, -2.5594, 'Rioja Alavesa — Stop 02','Laguardia · 1 night · wine country',             'https://www.google.com/maps/search/?api=1&query=Laguardia%20Rioja%20Alavesa'],
+    [43.3255, -1.9894, 'San Sebastián — Stop 03','Parte Vieja · 2 nights · La Concha & pintxos',   'https://www.google.com/maps/search/?api=1&query=Parte%20Vieja%20San%20Sebastian'],
+  ];
+  stops.forEach(function(s){
+    L.marker([s[0],s[1]], {icon:pin(stopColor,18)})
+      .addTo(map)
+      .bindPopup('<b>'+s[2]+'</b><br><span style="font-size:.85em;color:#5a6150">'+s[3]+'</span><br><a href="'+s[4]+'" target="_blank" style="font-size:.8em;color:#2d4a2b">Open in Maps ↗</a>');
+  });
+
+  // ---- SIGHTS & WINERIES ----
+  var sights = [
+    [43.2686, -2.9340, 'Guggenheim Museum Bilbao',  'Book ahead · opens 10:00',     'https://www.google.com/maps/search/?api=1&query=Guggenheim+Bilbao'],
+    [42.5688, -2.5907, 'Bodega Ysios',               'Calatrava architecture · tastings', 'https://www.google.com/maps/search/?api=1&query=Bodega+Ysios+Laguardia'],
+    [42.5111, -2.6202, 'Marqués de Riscal',          'Gehry titanium winery · Elciego',  'https://www.google.com/maps/search/?api=1&query=Marques+de+Riscal+Elciego'],
+    [43.3186, -1.9860, 'La Concha Beach',            'Morning swim · Monte Urgull nearby','https://www.google.com/maps/search/?api=1&query=La+Concha+San+Sebastian'],
+    [43.3027, -2.9139, 'Bilbao Airport (BIO)',       'Fly in/out · KLM from AMS',        'https://www.google.com/maps/search/?api=1&query=Bilbao+Airport'],
+  ];
+  sights.forEach(function(s){
+    L.marker([s[0],s[1]], {icon:pin(sightColor,12)})
+      .addTo(map)
+      .bindPopup('<b>'+s[2]+'</b><br><span style="font-size:.85em;color:#5a6150">'+s[3]+'</span><br><a href="'+s[4]+'" target="_blank" style="font-size:.8em;color:#2d4a2b">Open in Maps ↗</a>');
+  });
+
+  // ---- SURF SPOTS ----
+  var surfs = [
+    [43.3832, -3.0047, 'Sopelana',  'Day 2 · Beginner lesson · 20 min from Bilbao', 'https://www.google.com/maps/search/?api=1&query=Sopelana+beach'],
+    [43.2881, -2.1680, 'Zarautz',   'Day 5 · Final surf session · 25 min from Donostia', 'https://www.google.com/maps/search/?api=1&query=Zarautz+beach'],
+  ];
+  surfs.forEach(function(s){
+    L.marker([s[0],s[1]], {icon:pin(surfColor,12)})
+      .addTo(map)
+      .bindPopup('<b>'+s[2]+'</b><br><span style="font-size:.85em;color:#5a6150">'+s[3]+'</span><br><a href="'+s[4]+'" target="_blank" style="font-size:.8em;color:#2d4a2b">Open in Maps ↗</a>');
+  });
+
+  // ---- ROUTE LINE ----
+  // Bilbao airport → Casco Viejo → Sopelana → Rioja Alavesa → San Sebastián → Zarautz → BIO
+  var route = [
+    [43.3027, -2.9139],  // BIO airport
+    [43.2595, -2.9238],  // Bilbao Casco Viejo
+    [43.3832, -3.0047],  // Sopelana (day 2 detour)
+    [43.2595, -2.9238],  // back to Bilbao
+    [42.5420, -2.5594],  // Rioja Alavesa
+    [43.3255, -1.9894],  // San Sebastián
+    [43.2881, -2.1680],  // Zarautz
+    [43.3027, -2.9139],  // BIO airport
+  ];
+  L.polyline(route, {
+    color: '#2d4a2b',
+    weight: 2.5,
+    opacity: 0.55,
+    dashArray: '6 5'
+  }).addTo(map);
+
+})();
+</script>
 </body>
 </html>
