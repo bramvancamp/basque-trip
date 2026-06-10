@@ -385,6 +385,27 @@
   .summary-empty{text-align:center;color:var(--muted);padding:28px !important;
     font-family:'Archivo Narrow';letter-spacing:.1em;font-size:.8rem;text-transform:uppercase}
 
+  /* ---- IMAGE BREAKS ---- */
+  .img-break{width:100%;overflow:hidden;position:relative;
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--paper-2)}
+  .img-break img,.img-inline img{width:100%;object-fit:cover;display:block;
+    filter:sepia(18%) saturate(82%) contrast(1.02)}
+  .img-break img{height:420px}
+  .img-cap{position:absolute;bottom:0;left:0;right:0;
+    padding:50px 32px 20px;
+    background:linear-gradient(transparent,rgba(28,43,26,.58));
+    font-family:'Archivo Narrow';font-size:.7rem;text-transform:uppercase;
+    letter-spacing:.26em;color:rgba(250,249,246,.88);font-weight:600;pointer-events:none}
+  .img-inline{margin:26px 0 10px;overflow:hidden;border-radius:2px;position:relative;
+    border:1px solid var(--line)}
+  .img-inline img{height:300px}
+  .img-inline .img-cap{padding:36px 20px 14px}
+  @media(max-width:780px){
+    .img-break img{height:220px}
+    .img-inline img{height:180px}
+    .img-break .img-cap,.img-inline .img-cap{font-size:.62rem;letter-spacing:.18em}
+  }
+
   /* ---- MOBILE IMPROVEMENTS ---- */
   @media(max-width:780px){
     .index-links{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -466,7 +487,7 @@
     <span>AMS / BRU → BIO</span>
   </div>
   <div class="hero-mid">
-    <div class="kicker">A Guys' Road Trip · Basque Country &amp; Rioja</div>
+    <div class="kicker">A Guys' Road Trip 🚗 · Basque Country &amp; Rioja</div>
     <h1>
       <span class="l">The Basque</span>
       <span class="l">Run</span>
@@ -572,6 +593,12 @@
   </div>
 </div>
 
+<!-- IMAGE: pintxos -->
+<div class="img-break">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Barra_de_pintxos_Donosti_06.JPG?width=1280" alt="Pintxos bar counter in San Sebastián" loading="lazy" onerror="this.parentElement.style.display='none'">
+  <div class="img-cap">The pintxos counter — Parte Vieja, San Sebastián</div>
+</div>
+
 <!-- DAYS -->
 <section id="itinerary">
   <div class="wrap">
@@ -581,7 +608,7 @@
     <div class="day">
       <div class="day-mark"><div class="num">01</div><div class="lbl">Wed 15 Jul</div><div class="loc">Bilbao</div></div>
       <div class="day-body">
-        <h3>Arrive, decompress, <em>eat</em></h3>
+        <h3>Arrive, decompress, <em>eat 🍽️</em></h3>
         <p>You both land mid-afternoon — pick up the car together, drive the 15 minutes into the Casco Viejo, and check in. With a 16:00–16:30 arrival there's just enough time to drop bags, walk the riverfront and find a cold <span class="hl">txakoli</span> before the evening's main event: a pintxos crawl through Plaza Nueva. The ritual is one drink, one or two bites, then move on. Start around 19:30 and eat until you can't.</p>
         <div class="staybox">
           <span class="tag stay">Where to stay</span>
@@ -603,7 +630,7 @@
     <div class="day">
       <div class="day-mark"><div class="num">02</div><div class="lbl">Thu 16 Jul</div><div class="loc">Bilbao</div></div>
       <div class="day-body">
-        <h3>Clifftop hike, <em>first waves</em>, big dinner</h3>
+        <h3>Clifftop hike, <em>first waves 🌊</em>, big dinner</h3>
         <p><span class="tag view">Hike</span><span class="tag surf">Surf · beginner</span></p>
         <p>Start the morning with the <span class="hl">Uribe Kosta coastal path</span> — a 10 km clifftop trail running from Plentzia to Sopelana along dramatic flysch sea-cliffs with views out over the Bay of Biscay. Allow 2.5–3 hours at an easy pace; the trail ends right at the beach. Then stay put: paddle straight into a <b>surf lesson at Sopelana</b> on the gentle summer beach-break. ≈ €45–55 for a 2h session.</p>
         <p>Evening, back in Bilbao: skip the bar crawl and sit down for a proper <span class="hl">txuletón</span> — the enormous bone-in Basque ribeye, charcoal-grilled, served for two. <b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Asador%20Indusi%20Bilbao" target="_blank" rel="noopener">Asador Indusi</a></b> or <b>Etxanobe</b> both deliver. ≈ €40–60 each with wine.</p>
@@ -615,11 +642,17 @@
       </div>
     </div>
 
+    <!-- IMAGE: Guggenheim Bilbao -->
+    <div class="img-inline">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Guggenheim_Museum,_Bilbao,_July_2010_(11).JPG/1280px-Guggenheim_Museum,_Bilbao,_July_2010_(11).JPG" alt="Guggenheim Museum Bilbao exterior" loading="lazy" onerror="this.parentElement.style.display='none'">
+      <div class="img-cap">Guggenheim Bilbao — Gehry's titanium masterpiece on the Nervión</div>
+    </div>
+
     <!-- DAY 3 -->
     <div class="day">
       <div class="day-mark"><div class="num">03</div><div class="lbl">Fri 17 Jul</div><div class="loc">Rioja Alavesa</div></div>
       <div class="day-body">
-        <h3>South to the <em>vines</em> &amp; the walled town</h3>
+        <h3>South to the <em>vines 🍷</em> &amp; the walled town</h3>
         <p><span class="tag wine">Wine</span><span class="tag view">View</span></p>
         <p>A 45-minute drive drops you into a different world: vineyards to the horizon, the Sierra de Cantabria behind, medieval villages on the hilltops, almost no tourists. Morning at <b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bodega%20Ysios%20Laguardia" target="_blank" rel="noopener">Bodega Ysios</a></b>, Calatrava's wave-roofed winery against the mountains. Then <b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Marques%20de%20Riscal%20Elciego" target="_blank" rel="noopener">Marqués de Riscal</a></b> in Elciego — Frank Gehry's titanium showpiece, by the same hand as the Guggenheim. The jump from ancient village to avant-garde architecture is jarring in the best way.</p>
         <p>Afternoon: walk <span class="hl">Laguardia</span> — the walls, the <em>calados</em> (wine cellars carved beneath the streets), the view over the vines. Long, slow lunch with a bottle of Tempranillo. No rush; you're sleeping here.</p>
@@ -637,11 +670,17 @@
       </div>
     </div>
 
+    <!-- IMAGE: Ysios vineyard -->
+    <div class="img-inline">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Weinreben_des_Bodegas_Ysios.jpg?width=1280" alt="Vineyards at Bodega Ysios, Laguardia" loading="lazy" onerror="this.parentElement.style.display='none'">
+      <div class="img-cap">Rioja Alavesa — the vineyards of Bodega Ysios, Laguardia</div>
+    </div>
+
     <!-- DAY 4 -->
     <div class="day">
       <div class="day-mark"><div class="num">04</div><div class="lbl">Sat 18 Jul</div><div class="loc">San Sebastián</div></div>
       <div class="day-body">
-        <h3>Zurriola surf, La Concha &amp; the <em>pintxos</em> capital</h3>
+        <h3>Zurriola 🏄 surf, La Concha &amp; the <em>pintxos</em> capital</h3>
         <p><span class="tag surf">Surf · beginner</span><span class="tag view">View</span></p>
         <p>A 1h15 drive northeast to San Sebastián. Check into Gros, dump bags, and head straight to <span class="hl">Zurriola beach</span> — the surf beach that's practically your front door — for a mid-morning lesson on the Atlantic beach-break. ≈ €45–55 for a 2h session. After lunch, walk the La Concha promenade and hike up <b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Monte%20Urgull%20San%20Sebastian" target="_blank" rel="noopener">Monte Urgull</a></b> (free, 30 min) for the panorama over the bay. Then the reason you came: the Parte Vieja crawl, where pintxos are more refined, fresher, and higher-average than anywhere else on earth.</p>
         <div class="staybox">
@@ -660,11 +699,17 @@
       </div>
     </div>
 
+    <!-- IMAGE: La Concha bay -->
+    <div class="img-inline">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/LA_CONCHA%2C_SAN_SEBASTI%C3%81N%2C_SPAIN.JPG?width=1280" alt="La Concha bay, San Sebastián" loading="lazy" onerror="this.parentElement.style.display='none'">
+      <div class="img-cap">La Concha — San Sebastián's famous crescent bay</div>
+    </div>
+
     <!-- DAY 5 -->
     <div class="day">
       <div class="day-mark"><div class="num">05</div><div class="lbl">Sun 20 Jul</div><div class="loc">Zarautz → BIO</div></div>
       <div class="day-body">
-        <h3>One more wave, then <em>home</em></h3>
+        <h3>One more wave 🌊, then <em>home</em></h3>
         <p><span class="tag surf">Surf · beginner</span></p>
         <p>Drive 25 minutes west to <span class="hl">Zarautz</span>, the quintessential Spanish surf town — a 2.5km beach lined with surf schools. A final morning session on forgiving summer waves, lunch on the promenade, then the easy 1h10 run back to Bilbao airport to drop the car and fly home.</p>
       </div>
@@ -673,10 +718,16 @@
   </div>
 </section>
 
+<!-- IMAGE: Zarautz surf beach -->
+<div class="img-break">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/E4781-Zarautz-beach-Raton.JPG?width=1280" alt="Zarautz beach, Basque Country" loading="lazy" onerror="this.parentElement.style.display='none'">
+  <div class="img-cap">Zarautz — the Basque coast's longest beach, a surfer's town</div>
+</div>
+
 <!-- SURF CALLOUT -->
 <section class="surf" id="surf-section">
   <div class="wrap">
-    <div class="sec-label">The Waves — Beginner Only</div>
+    <div class="sec-label">🌊 The Waves — Beginner Only</div>
     <h2>Summer is the <em>right</em> time to learn here.</h2>
     <div class="surf-grid">
       <div class="spot" data-rating-id="sopelana-surf">
@@ -722,12 +773,12 @@
     <div class="sec-label">Before You Go</div>
     <h2>Six things <em>worth knowing</em></h2>
     <div class="tips-grid" style="margin-top:30px">
-      <div class="tip"><div class="ico">i.</div><h4>Book the Guggenheim &amp; wineries ahead</h4><p>July is busy and timed slots fill up. Reserve Ysios and Marqués de Riscal tours online before you fly.</p></div>
-      <div class="tip"><div class="ico">ii.</div><h4>La Cuchara takes no reservations</h4><p>Arrive at 19:30 when it opens, or be prepared to wait shoulder-to-shoulder.</p></div>
-      <div class="tip"><div class="ico">iii.</div><h4>Eat pintxos at 7:30–9pm</h4><p>The liveliest session. Dodge the 8:30–9:30 tourist peak if you want elbow room at the bar.</p></div>
-      <div class="tip"><div class="ico">iv.</div><h4>Book surf a few days out</h4><p>Schools fill in July. Lock Sopelana and Zarautz in advance rather than walking up.</p></div>
-      <div class="tip"><div class="ico">v.</div><h4>Pour the txakoli high</h4><p>The local fizzy white is poured from height to aerate it. Order it everywhere; it's made for pintxos.</p></div>
-      <div class="tip"><div class="ico">vi.</div><h4>One car, from the start</h4><p>Same arrival airport — coordinate flight times and split the rental from the moment you both land.</p></div>
+      <div class="tip"><div class="ico">📅</div><h4>Book the Guggenheim &amp; wineries ahead</h4><p>July is busy and timed slots fill up. Reserve Ysios and Marqués de Riscal tours online before you fly.</p></div>
+      <div class="tip"><div class="ico">⏰</div><h4>La Cuchara takes no reservations</h4><p>Arrive at 19:30 when it opens, or be prepared to wait shoulder-to-shoulder.</p></div>
+      <div class="tip"><div class="ico">🕢</div><h4>Eat pintxos at 7:30–9pm</h4><p>The liveliest session. Dodge the 8:30–9:30 tourist peak if you want elbow room at the bar.</p></div>
+      <div class="tip"><div class="ico">🏄</div><h4>Book surf a few days out</h4><p>Schools fill in July. Lock Sopelana and Zarautz in advance rather than walking up.</p></div>
+      <div class="tip"><div class="ico">🥂</div><h4>Pour the txakoli high</h4><p>The local fizzy white is poured from height to aerate it. Order it everywhere; it's made for pintxos.</p></div>
+      <div class="tip"><div class="ico">🚗</div><h4>One car, from the start</h4><p>Same arrival airport — coordinate flight times and split the rental from the moment you both land.</p></div>
     </div>
   </div>
 </section>
@@ -735,7 +786,7 @@
 <!-- EVENTS -->
 <section id="events-section">
   <div class="wrap">
-    <div class="sec-label">What's On</div>
+    <div class="sec-label">🎷 What's On</div>
     <h2>Events during <em>the trip</em></h2>
 
     <div id="events-map"></div>
@@ -755,7 +806,7 @@
         <h4><a class="map" href="https://jazzvitoria.com" target="_blank" rel="noopener">Festival de Jazz de Vitoria-Gasteiz</a></h4>
         <div class="event-loc">Vitoria-Gasteiz <span>· 60 km from Bilbao · 45 min drive</span></div>
         <p>One of Europe's great jazz festivals, running for 50+ years. Free daytime concerts pack the Plaza de España; paid evening headline sets bring world-class names. Perfectly combinable with the Rioja Alavesa day — it's a 45-minute drive from Laguardia.</p>
-        <div class="event-flag on">✦ Overlaps your trip</div>
+        <div class="event-flag on">🎷 ✦ Overlaps your trip</div>
       </div>
 
       <!-- Pintxo-Pote -->
@@ -767,7 +818,7 @@
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Plaza+Nueva+Bilbao" target="_blank" rel="noopener">Pintxo-Pote Thursday</a></h4>
         <div class="event-loc">Bilbao Casco Viejo &amp; San Sebastián Parte Vieja <span>· your base</span></div>
         <p>The most social night of the week in both cities. Bars offer a pintxo + txakoli or beer for €1–2. The entire old town fills up from 19:30. Thu 16 Jul falls in Bilbao; if you're still in San Sebastián on Thu 23 Jul you'll catch it there too. Don't miss it.</p>
-        <div class="event-flag on">✦ Thu 16 Jul — Bilbao</div>
+        <div class="event-flag on">🍺 ✦ Thu 16 Jul — Bilbao</div>
       </div>
 
       <!-- Laguardia evenings -->
@@ -779,7 +830,7 @@
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Plaza+Mayor+Laguardia" target="_blank" rel="noopener">Laguardia Summer Evenings</a></h4>
         <div class="event-loc">Laguardia <span>· your Day 3 base</span></div>
         <p>The medieval walled town comes alive on summer Friday and Saturday nights — live folk and jazz in the main square, local wine poured from the barrel, stalls selling Rioja products. You're sleeping inside the walls, so you just walk downstairs.</p>
-        <div class="event-flag on">✦ Fri 18 Jul — you're there</div>
+        <div class="event-flag on">🍷 ✦ Fri 18 Jul — you're there</div>
       </div>
 
       <!-- Zarautz beach -->
@@ -791,7 +842,7 @@
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Zarautz+beach" target="_blank" rel="noopener">Zarautz Summer Beach Events</a></h4>
         <div class="event-loc">Zarautz <span>· Day 5 · 25 min from San Sebastián</span></div>
         <p>Zarautz hosts surf competitions and beach parties across July and August — the promenade bars run late and the beach stays busy after dark. Your final morning surf session on Day 5 may land mid-competition, which makes for great spectating between waves.</p>
-        <div class="event-flag on">✦ Sun 20 Jul — your last morning</div>
+        <div class="event-flag on">🏄 ✦ Sun 20 Jul — your last morning</div>
       </div>
 
       <!-- La Concha concerts -->
@@ -803,7 +854,7 @@
         <h4><a class="map" href="https://donostiakultura.eus" target="_blank" rel="noopener">San Sebastián Summer Concert Series</a></h4>
         <div class="event-loc">La Concha Promenade &amp; Zurriola <span>· San Sebastián</span></div>
         <p>Free outdoor concerts run along the waterfront throughout the summer — local bands, jazz combos, and occasional bigger acts on temporary stages. Check the Donostia Kultura listings when you arrive. A relaxed way to end an evening after the pintxos crawl.</p>
-        <div class="event-flag on">✦ Sat–Sun 18–19 Jul</div>
+        <div class="event-flag on">🎵 ✦ Sat–Sun 18–19 Jul</div>
       </div>
 
       <!-- Jazzaldia — just after -->
@@ -865,7 +916,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="wrap fwrap">
-    <h3>Eat well. Drive a little. <em>Surf badly.</em></h3>
+    <h3>Eat well 🍽️. Drive a little 🚗. <em>Surf badly 🏄.</em></h3>
     <div class="meta">
       The Basque Run<br>
       15 – 20 July 2026<br>
