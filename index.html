@@ -349,6 +349,62 @@
   .star-btn.hover{color:var(--gold-bright)}
   .rating-summary{font-family:'Archivo Narrow';font-size:.74rem;color:var(--muted);letter-spacing:.06em}
   .spot .rating-widget{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+
+  /* ---- RATING HIGHLIGHTS ---- */
+  [data-rating-id].rating-good{background:rgba(58,122,58,.06) !important}
+  [data-rating-id].rating-bad {background:rgba(154,58,58,.06)  !important}
+  [data-rating-id].rating-good.spot,
+  [data-rating-id].rating-good.event-card{border-top-color:#3a7a3a !important}
+  [data-rating-id].rating-bad.spot,
+  [data-rating-id].rating-bad.event-card {border-top-color:#9a3a3a !important}
+  [data-rating-id].pick.rating-good{border-left:3px solid #3a7a3a;padding-left:10px;margin-left:-12px}
+  [data-rating-id].pick.rating-bad {border-left:3px solid #9a3a3a;padding-left:10px;margin-left:-12px}
+
+  /* ---- BACK TO TOP ---- */
+  #back-to-top{position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;
+    background:var(--ink);color:var(--paper);border:none;font-size:1.2rem;line-height:1;
+    cursor:pointer;z-index:500;display:none;align-items:center;justify-content:center;
+    box-shadow:0 2px 14px rgba(0,0,0,.25);transition:background .15s}
+  #back-to-top.visible{display:flex}
+  #back-to-top:hover{background:var(--rioja)}
+
+  /* ---- SCORES SUMMARY ---- */
+  .summary{background:var(--paper-2);border-top:2px solid var(--ink)}
+  .summary-wrap{overflow-x:auto;margin-top:30px}
+  .summary-table{width:100%;border-collapse:collapse;border:1.5px solid var(--ink);background:var(--paper);min-width:480px}
+  .summary-table th{padding:12px 18px;background:var(--paper-2);font-family:'Archivo Narrow';
+    text-transform:uppercase;letter-spacing:.2em;font-size:.7rem;font-weight:700;
+    border-bottom:1.5px solid var(--ink);text-align:left;color:var(--ink);white-space:nowrap}
+  .summary-table td{padding:13px 18px;border-bottom:1px solid var(--line);font-size:.93rem;color:var(--body);vertical-align:middle}
+  .summary-table tr:last-child td{border-bottom:none}
+  .summary-table tr:hover td{background:var(--paper-2)}
+  .s-cat{font-family:'Archivo Narrow';font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .s-stars{color:var(--gold);letter-spacing:1px;font-size:.88rem}
+  .s-avg{font-family:'Fraunces';font-size:1rem;font-weight:500;margin-left:6px;color:var(--ink)}
+  .s-votes{font-family:'Archivo Narrow';font-size:.78rem;color:var(--muted);white-space:nowrap}
+  .summary-empty{text-align:center;color:var(--muted);padding:28px !important;
+    font-family:'Archivo Narrow';letter-spacing:.1em;font-size:.8rem;text-transform:uppercase}
+
+  /* ---- MOBILE IMPROVEMENTS ---- */
+  @media(max-width:780px){
+    .index-links{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .index-links::-webkit-scrollbar{display:none}
+    .index-links a{flex-shrink:0;padding:14px 14px;font-size:.8rem}
+    .auth-area{padding:0 14px;gap:8px;flex-shrink:0}
+    #auth-btn{font-size:.62rem;padding:6px 10px;letter-spacing:.12em}
+    #user-name{display:none !important}
+    .star-btn{padding:3px 5px;font-size:1.25rem}
+    .rating-widget{gap:8px}
+    .hero{padding:24px 16px 30px}
+    .hero-stats .s b{font-size:1.8rem}
+    .hero-stats{gap:16px}
+    .hero-foot{gap:16px}
+    .picks{padding-left:14px}
+    .summary-table th:nth-child(2),.summary-table td:nth-child(2){display:none}
+    #back-to-top{bottom:18px;right:16px;width:42px;height:42px;font-size:1.1rem}
+    .login-box h2,.pending-box h2{font-size:2rem}
+    .ov-grid p{font-size:.97rem}
+  }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 </head>
@@ -393,6 +449,7 @@
       <a href="#budget-section"><span class="idx-n">04</span>Budget</a>
       <a href="#tips-section"><span class="idx-n">05</span>Tips</a>
       <a href="#events-section"><span class="idx-n">06</span>Events</a>
+      <a href="#summary-section"><span class="idx-n">07</span>Scores</a>
     </div>
     <div class="auth-area">
       <span id="user-name"></span>
@@ -695,7 +752,7 @@
           <span class="event-type jazz">Jazz</span>
           <span class="event-dates">~14–19 Jul · verify 2026 dates</span>
         </div>
-        <h4>Festival de Jazz de Vitoria-Gasteiz</h4>
+        <h4><a class="map" href="https://jazzvitoria.com" target="_blank" rel="noopener">Festival de Jazz de Vitoria-Gasteiz</a></h4>
         <div class="event-loc">Vitoria-Gasteiz <span>· 60 km from Bilbao · 45 min drive</span></div>
         <p>One of Europe's great jazz festivals, running for 50+ years. Free daytime concerts pack the Plaza de España; paid evening headline sets bring world-class names. Perfectly combinable with the Rioja Alavesa day — it's a 45-minute drive from Laguardia.</p>
         <div class="event-flag on">✦ Overlaps your trip</div>
@@ -707,7 +764,7 @@
           <span class="event-type nightlife">Nightlife</span>
           <span class="event-dates">Every Thursday evening</span>
         </div>
-        <h4>Pintxo-Pote Thursday</h4>
+        <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Plaza+Nueva+Bilbao" target="_blank" rel="noopener">Pintxo-Pote Thursday</a></h4>
         <div class="event-loc">Bilbao Casco Viejo &amp; San Sebastián Parte Vieja <span>· your base</span></div>
         <p>The most social night of the week in both cities. Bars offer a pintxo + txakoli or beer for €1–2. The entire old town fills up from 19:30. Thu 16 Jul falls in Bilbao; if you're still in San Sebastián on Thu 23 Jul you'll catch it there too. Don't miss it.</p>
         <div class="event-flag on">✦ Thu 16 Jul — Bilbao</div>
@@ -719,7 +776,7 @@
           <span class="event-type wine">Wine &amp; Culture</span>
           <span class="event-dates">Summer weekends · Jul–Aug</span>
         </div>
-        <h4>Laguardia Summer Evenings</h4>
+        <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Plaza+Mayor+Laguardia" target="_blank" rel="noopener">Laguardia Summer Evenings</a></h4>
         <div class="event-loc">Laguardia <span>· your Day 3 base</span></div>
         <p>The medieval walled town comes alive on summer Friday and Saturday nights — live folk and jazz in the main square, local wine poured from the barrel, stalls selling Rioja products. You're sleeping inside the walls, so you just walk downstairs.</p>
         <div class="event-flag on">✦ Fri 18 Jul — you're there</div>
@@ -731,7 +788,7 @@
           <span class="event-type surf">Surf &amp; Beach</span>
           <span class="event-dates">Throughout July</span>
         </div>
-        <h4>Zarautz Summer Beach Events</h4>
+        <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Zarautz+beach" target="_blank" rel="noopener">Zarautz Summer Beach Events</a></h4>
         <div class="event-loc">Zarautz <span>· Day 5 · 25 min from San Sebastián</span></div>
         <p>Zarautz hosts surf competitions and beach parties across July and August — the promenade bars run late and the beach stays busy after dark. Your final morning surf session on Day 5 may land mid-competition, which makes for great spectating between waves.</p>
         <div class="event-flag on">✦ Sun 20 Jul — your last morning</div>
@@ -743,7 +800,7 @@
           <span class="event-type festival">Outdoor Music</span>
           <span class="event-dates">July &amp; August evenings</span>
         </div>
-        <h4>San Sebastián Summer Concert Series</h4>
+        <h4><a class="map" href="https://donostiakultura.eus" target="_blank" rel="noopener">San Sebastián Summer Concert Series</a></h4>
         <div class="event-loc">La Concha Promenade &amp; Zurriola <span>· San Sebastián</span></div>
         <p>Free outdoor concerts run along the waterfront throughout the summer — local bands, jazz combos, and occasional bigger acts on temporary stages. Check the Donostia Kultura listings when you arrive. A relaxed way to end an evening after the pintxos crawl.</p>
         <div class="event-flag on">✦ Sat–Sun 18–19 Jul</div>
@@ -755,7 +812,7 @@
           <span class="event-type jazz">Jazz</span>
           <span class="event-dates">~22–27 Jul · starts 2 days after you leave</span>
         </div>
-        <h4>Jazzaldia — San Sebastián Jazz Festival</h4>
+        <h4><a class="map" href="https://jazzaldia.eus" target="_blank" rel="noopener">Jazzaldia — San Sebastián Jazz Festival</a></h4>
         <div class="event-loc">San Sebastián <span>· your final base</span></div>
         <p>One of the world's most prestigious jazz festivals, held on the waterfront stages of La Concha. Past headliners: Pat Metheny, Diana Krall, Herbie Hancock. You fly out on the 20th — staying two extra days would put you right in the opening weekend.</p>
         <div class="event-flag close">↗ Starts 2 days after your flight</div>
@@ -767,7 +824,7 @@
           <span class="event-type festival">Festival</span>
           <span class="event-dates">~10–12 Jul · 3 days before you arrive</span>
         </div>
-        <h4>Bilbao BBK Live</h4>
+        <h4><a class="map" href="https://bilbaobbklive.com" target="_blank" rel="noopener">Bilbao BBK Live</a></h4>
         <div class="event-loc">Monte Cobetas, Bilbao <span>· 20 min from Casco Viejo</span></div>
         <p>Bilbao's major rock and electronic festival on a hilltop overlooking the city. Past lineups have included Arctic Monkeys, Massive Attack, Rosalía. Arriving three days earlier would cover the full festival before the road trip begins.</p>
         <div class="event-flag close">↗ Ends 3 days before your flight in</div>
@@ -778,6 +835,32 @@
     <p class="events-note">Dates above are based on typical annual scheduling — always confirm the 2026 programme on each festival's official site before booking anything around them.</p>
   </div>
 </section>
+
+<!-- SCORES SUMMARY -->
+<section class="summary" id="summary-section">
+  <div class="wrap">
+    <div class="sec-label">Scores</div>
+    <h2>Everything we've <em>rated</em></h2>
+    <div class="summary-wrap">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Rating</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody id="summary-tbody">
+          <tr><td colspan="4" class="summary-empty">No ratings yet — start scoring!</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" aria-label="Back to top">↑</button>
 
 <!-- FOOTER -->
 <footer>
@@ -1018,6 +1101,7 @@ function initRatings() {
     onSnapshot(ref, snap => {
       votesCache[id] = snap.docs.map(d => d.data());
       renderWidget(el, id, votesCache[id]);
+      updateSummary();
     });
   });
 }
@@ -1028,6 +1112,12 @@ function renderWidget(el, id, votes) {
 
   const avg       = votes.length ? votes.reduce((s, v) => s + v.score, 0) / votes.length : 0;
   const userScore = currentUser ? (votes.find(v => v.uid === currentUser.uid)?.score ?? 0) : 0;
+
+  // Highlight card based on vote thresholds
+  const highVotes = votes.filter(v => v.score >= 4).length;
+  const lowVotes  = votes.filter(v => v.score <= 3).length;
+  el.classList.toggle('rating-good', highVotes >= 2);
+  el.classList.toggle('rating-bad',  highVotes < 2 && lowVotes >= 2);
 
   w.innerHTML = `
     <div class="stars">
@@ -1059,6 +1149,62 @@ async function submitRating(itemId, score) {
     updatedAt: serverTimestamp()
   });
 }
+
+// ── Summary table ─────────────────────────────────────────────────
+function getItemLabel(el) {
+  const h4 = el.querySelector('h4');
+  if (h4) return h4.textContent.trim();
+  const b = el.querySelector('b');
+  if (b) return b.textContent.trim();
+  return el.dataset.ratingId.replace(/-/g, ' ');
+}
+
+function getItemCategory(el) {
+  if (el.classList.contains('event-card')) return 'Event';
+  if (el.classList.contains('spot'))       return 'Surf';
+  const id = el.dataset.ratingId;
+  if (['uribe-kosta-hike','bodega-ysios','marques-de-riscal'].includes(id)) return 'Activity';
+  return 'Restaurant';
+}
+
+function updateSummary() {
+  const tbody = document.getElementById('summary-tbody');
+  if (!tbody) return;
+
+  const items = [];
+  document.querySelectorAll('[data-rating-id]').forEach(el => {
+    const id    = el.dataset.ratingId;
+    const votes = votesCache[id] || [];
+    if (!votes.length) return;
+    const avg = votes.reduce((s, v) => s + v.score, 0) / votes.length;
+    items.push({ label: getItemLabel(el), cat: getItemCategory(el), avg, count: votes.length });
+  });
+
+  items.sort((a, b) => b.avg - a.avg || b.count - a.count);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="summary-empty">No ratings yet — start scoring!</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = items.map(item => {
+    const full  = Math.floor(item.avg);
+    const stars = '★'.repeat(full) + (item.avg - full >= 0.5 ? '★' : '') ;
+    return `<tr>
+      <td>${item.label}</td>
+      <td><span class="s-cat">${item.cat}</span></td>
+      <td><span class="s-stars">${stars}</span><span class="s-avg">${item.avg.toFixed(1)}</span></td>
+      <td><span class="s-votes">${item.count} vote${item.count !== 1 ? 's' : ''}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Back to top ───────────────────────────────────────────────────
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 </body>
 </html>
