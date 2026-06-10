@@ -301,7 +301,8 @@
   .event-flag.on{color:var(--rioja)}
   .event-flag.close{color:var(--sea)}
   .events-note{margin-top:28px;font-family:'Fraunces';font-style:italic;font-size:1.05rem;color:#2f3a28;max-width:72ch}
-  @media(max-width:780px){.events-grid{grid-template-columns:1fr}}
+  #events-map{width:100%;height:380px;border:1.5px solid var(--line);border-radius:3px;margin-top:28px;z-index:2;position:relative}
+  @media(max-width:780px){.events-grid{grid-template-columns:1fr}#events-map{height:260px}}
 
   /* ---- AUTH ---- */
   .auth-area{display:flex;align-items:center;gap:14px;padding:0 22px;margin-left:auto;border-left:1px solid var(--line)}
@@ -628,10 +629,16 @@
     <div class="sec-label">What's On</div>
     <h2>Events during <em>the trip</em></h2>
 
+    <div id="events-map"></div>
+    <div class="map-legend" style="padding-bottom:34px">
+      <span><div class="dot stop"></div> During trip</span>
+      <span><div class="dot" style="background:var(--sea)"></div> Just outside window</span>
+    </div>
+
     <div class="events-grid">
 
       <!-- Jazz Vitoria -->
-      <div class="event-card during">
+      <div class="event-card during" data-rating-id="event-jazz-vitoria">
         <div class="event-meta">
           <span class="event-type jazz">Jazz</span>
           <span class="event-dates">~14–19 Jul · verify 2026 dates</span>
@@ -643,7 +650,7 @@
       </div>
 
       <!-- Pintxo-Pote -->
-      <div class="event-card during">
+      <div class="event-card during" data-rating-id="event-pintxo-pote">
         <div class="event-meta">
           <span class="event-type nightlife">Nightlife</span>
           <span class="event-dates">Every Thursday evening</span>
@@ -655,7 +662,7 @@
       </div>
 
       <!-- Laguardia evenings -->
-      <div class="event-card during">
+      <div class="event-card during" data-rating-id="event-laguardia">
         <div class="event-meta">
           <span class="event-type wine">Wine &amp; Culture</span>
           <span class="event-dates">Summer weekends · Jul–Aug</span>
@@ -667,7 +674,7 @@
       </div>
 
       <!-- Zarautz beach -->
-      <div class="event-card during">
+      <div class="event-card during" data-rating-id="event-zarautz">
         <div class="event-meta">
           <span class="event-type surf">Surf &amp; Beach</span>
           <span class="event-dates">Throughout July</span>
@@ -679,7 +686,7 @@
       </div>
 
       <!-- La Concha concerts -->
-      <div class="event-card during">
+      <div class="event-card during" data-rating-id="event-ss-concerts">
         <div class="event-meta">
           <span class="event-type festival">Outdoor Music</span>
           <span class="event-dates">July &amp; August evenings</span>
@@ -691,7 +698,7 @@
       </div>
 
       <!-- Jazzaldia — just after -->
-      <div class="event-card nearby">
+      <div class="event-card nearby" data-rating-id="event-jazzaldia">
         <div class="event-meta">
           <span class="event-type jazz">Jazz</span>
           <span class="event-dates">~22–27 Jul · starts 2 days after you leave</span>
@@ -703,7 +710,7 @@
       </div>
 
       <!-- BBK Live — just before -->
-      <div class="event-card nearby">
+      <div class="event-card nearby" data-rating-id="event-bbk-live">
         <div class="event-meta">
           <span class="event-type festival">Festival</span>
           <span class="event-dates">~10–12 Jul · 3 days before you arrive</span>
@@ -816,6 +823,44 @@
     dashArray: '6 5'
   }).addTo(map);
 
+})();
+</script>
+
+<script>
+(function(){
+  var map = L.map('events-map', { center: [43.0, -2.5], zoom: 8, scrollWheelZoom: false });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  function pin(color, size) {
+    size = size || 14;
+    return L.divIcon({
+      className: '',
+      html: '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+color+';border:2.5px solid #faf9f6;box-shadow:0 1px 5px rgba(0,0,0,.35)"></div>',
+      iconSize: [size, size], iconAnchor: [size/2, size/2]
+    });
+  }
+
+  var during = '#2d4a2b';
+  var nearby = '#5c6a4f';
+
+  var events = [
+    [42.8467, -2.6727, 'Festival de Jazz de Vitoria-Gasteiz', '~14–19 Jul · overlaps your trip', during, 18],
+    [43.2595, -2.9238, 'Pintxo-Pote Thursday',                 'Thu 16 Jul · Bilbao Casco Viejo',  during, 18],
+    [42.5420, -2.5594, 'Laguardia Summer Evenings',            'Fri 18 Jul · you\'re sleeping here', during, 18],
+    [43.2881, -2.1680, 'Zarautz Beach Events',                 'Sun 20 Jul · your last morning',    during, 18],
+    [43.3186, -1.9860, 'San Sebastián Summer Concerts',        'Sat–Sun 18–19 Jul · La Concha',     during, 18],
+    [43.3255, -1.9894, 'Jazzaldia San Sebastián',              'Starts ~22 Jul · 2 days after trip', nearby, 13],
+    [43.2830, -2.9350, 'Bilbao BBK Live',                      'Ends ~12 Jul · 3 days before trip', nearby, 13],
+  ];
+
+  events.forEach(function(e) {
+    L.marker([e[0], e[1]], { icon: pin(e[4], e[5]) })
+      .addTo(map)
+      .bindPopup('<b>'+e[2]+'</b><br><span style="font-size:.85em;color:#5a6150">'+e[3]+'</span>');
+  });
 })();
 </script>
 
