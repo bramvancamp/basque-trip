@@ -304,6 +304,32 @@
   #events-map{width:100%;height:380px;border:1.5px solid var(--line);border-radius:3px;margin-top:28px;z-index:2;position:relative}
   @media(max-width:780px){.events-grid{grid-template-columns:1fr}#events-map{height:260px}}
 
+  /* ---- LOGIN OVERLAY ---- */
+  #login-overlay{position:fixed;inset:0;background:#faf9f6;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;padding:40px}
+  .login-box{max-width:440px;width:100%;text-align:center}
+  .login-box .kicker{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.34em;font-size:.78rem;font-weight:700;color:var(--rioja);margin-bottom:20px}
+  .login-box h2{font-family:'Fraunces';font-weight:400;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.015em;margin-bottom:10px}
+  .login-box h2 em{font-style:italic;color:var(--rioja)}
+  .login-box .sub{font-family:'Fraunces';font-weight:300;font-size:1.05rem;color:var(--muted);margin-bottom:36px;line-height:1.5}
+  #google-btn{display:inline-flex;align-items:center;gap:12px;font-family:'Archivo Narrow';font-weight:700;
+    text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;padding:14px 28px;
+    border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;
+    transition:background .15s,color .15s;border-radius:2px}
+  #google-btn:hover{background:var(--rioja);color:#faf9f6;border-color:var(--rioja)}
+  #google-btn svg{flex-shrink:0}
+  .login-box .login-note{margin-top:20px;font-family:'Archivo Narrow';font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+
+  /* ---- PENDING OVERLAY ---- */
+  #pending-overlay{position:fixed;inset:0;background:#faf9f6;z-index:1000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:0;padding:40px}
+  .pending-box{max-width:440px;width:100%;text-align:center}
+  .pending-box .kicker{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.34em;font-size:.78rem;font-weight:700;color:var(--sea);margin-bottom:20px}
+  .pending-box h2{font-family:'Fraunces';font-weight:400;font-size:2.2rem;line-height:1.05;margin-bottom:10px}
+  .pending-box .sub{font-family:'Fraunces';font-weight:300;font-size:1.05rem;color:var(--muted);margin-bottom:30px;line-height:1.5}
+  #pending-signout{font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.18em;
+    font-size:.72rem;padding:10px 20px;border:1.5px solid var(--line);background:transparent;
+    color:var(--muted);cursor:pointer;border-radius:2px}
+  #pending-signout:hover{border-color:var(--ink);color:var(--ink)}
+
   /* ---- AUTH ---- */
   .auth-area{display:flex;align-items:center;gap:14px;padding:0 22px;margin-left:auto;border-left:1px solid var(--line)}
   #auth-btn{font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.18em;
@@ -328,6 +354,32 @@
 </head>
 <body>
 <div id="lightbackdrop"></div>
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="kicker">Private · Invite Only</div>
+    <h2>The Basque <em>Run</em></h2>
+    <p class="sub">Sign in with your Google account to access the trip.</p>
+    <button id="google-btn">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Sign in with Google
+    </button>
+    <p class="login-note">Access is restricted — request will be sent to the trip organiser.</p>
+  </div>
+</div>
+
+<!-- PENDING OVERLAY -->
+<div id="pending-overlay">
+  <div class="pending-box">
+    <div class="kicker">Pending Approval</div>
+    <h2>Request received</h2>
+    <p class="sub">Your account has been registered. The trip organiser will approve your access shortly — come back soon.</p>
+    <button id="pending-signout">Sign out</button>
+  </div>
+</div>
 
 <!-- INDEX NAV -->
 <nav class="index-nav" id="top">
@@ -868,8 +920,10 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, collection, onSnapshot, serverTimestamp }
+import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const ADMIN_UID = '5wklihfuHxT8FtCZgWzvhqTfUqh2';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBj0nLfXLeL3sRK2v8xMPwGZCLxGY2M8Pw",
@@ -880,43 +934,78 @@ const firebaseConfig = {
   appId: "1:975729936790:web:2dd5f173a4a47d1886f5b7"
 };
 
-const app   = initializeApp(firebaseConfig);
-const auth  = getAuth(app);
-const db    = getFirestore(app, 'trip');
+const app      = initializeApp(firebaseConfig);
+const auth     = getAuth(app);
+const db       = getFirestore(app, 'trip');
 const provider = new GoogleAuthProvider();
 
 let currentUser = null;
-const votesCache = {};   // itemId → votes[]
+const votesCache = {};
 
-// ── Auth button ───────────────────────────────────────────────────
-document.getElementById('auth-btn').addEventListener('click', async () => {
-  if (currentUser) {
-    await signOut(auth);
+// ── Overlays ──────────────────────────────────────────────────────
+const loginOverlay   = document.getElementById('login-overlay');
+const pendingOverlay = document.getElementById('pending-overlay');
+
+function showLogin()   { loginOverlay.style.display='flex'; pendingOverlay.style.display='none'; }
+function showPending() { loginOverlay.style.display='none'; pendingOverlay.style.display='flex'; }
+function showSite()    { loginOverlay.style.display='none'; pendingOverlay.style.display='none'; }
+
+showLogin(); // hide site until auth resolves
+
+document.getElementById('google-btn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, provider); }
+  catch(e) { console.error('Sign-in error', e); }
+});
+
+document.getElementById('pending-signout').addEventListener('click', () => signOut(auth));
+document.getElementById('auth-btn').addEventListener('click', () => signOut(auth));
+
+// ── Auth state ────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+
+  if (!user) { showLogin(); updateNavAuth(null); return; }
+
+  if (user.uid === ADMIN_UID) {
+    await setDoc(doc(db, 'users', user.uid), {
+      displayName: user.displayName, email: user.email,
+      photoURL: user.photoURL || '', approved: true, admin: true,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+    showSite(); updateNavAuth(user); initRatings();
+    return;
+  }
+
+  const userRef  = doc(db, 'users', user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    await setDoc(userRef, {
+      displayName: user.displayName, email: user.email,
+      photoURL: user.photoURL || '', approved: false,
+      requestedAt: serverTimestamp()
+    });
+    showPending(); updateNavAuth(null);
+    return;
+  }
+
+  if (userSnap.data().approved) {
+    showSite(); updateNavAuth(user); initRatings();
   } else {
-    try { await signInWithPopup(auth, provider); }
-    catch(e) { console.error('Sign-in error', e); }
+    showPending(); updateNavAuth(null);
   }
 });
 
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-  const btn    = document.getElementById('auth-btn');
+function updateNavAuth(user) {
   const nameEl = document.getElementById('user-name');
   if (user) {
-    btn.textContent    = 'Sign out';
-    nameEl.textContent = user.displayName;
+    nameEl.textContent   = user.displayName;
     nameEl.style.display = 'inline';
   } else {
-    btn.textContent    = 'Sign in with Google';
-    nameEl.textContent = '';
+    nameEl.textContent   = '';
     nameEl.style.display = 'none';
   }
-  // Re-render all widgets so interactivity state updates
-  document.querySelectorAll('[data-rating-id]').forEach(el => {
-    const id = el.dataset.ratingId;
-    if (votesCache[id]) renderWidget(el, id, votesCache[id]);
-  });
-});
+}
 
 // ── Ratings ───────────────────────────────────────────────────────
 function initRatings() {
@@ -936,19 +1025,18 @@ function renderWidget(el, id, votes) {
 
   const avg       = votes.length ? votes.reduce((s, v) => s + v.score, 0) / votes.length : 0;
   const userScore = currentUser ? (votes.find(v => v.uid === currentUser.uid)?.score ?? 0) : 0;
-  const canRate   = !!currentUser;
 
   w.innerHTML = `
     <div class="stars">
       ${[1,2,3,4,5].map(n =>
-        `<button class="star-btn${userScore >= n ? ' active' : ''}" data-score="${n}"${!canRate ? ' disabled' : ''}
-          title="${canRate ? `Rate ${n} star${n>1?'s':''}` : 'Sign in to rate'}">★</button>`
+        `<button class="star-btn${userScore >= n ? ' active' : ''}" data-score="${n}"
+          title="Rate ${n} star${n>1?'s':''}">★</button>`
       ).join('')}
     </div>
     <span class="rating-summary">${
       votes.length
         ? `${avg.toFixed(1)} ★ · ${votes.length} vote${votes.length !== 1 ? 's' : ''}`
-        : `<span style="opacity:.55">${canRate ? 'Be the first to rate' : 'Sign in to rate'}</span>`
+        : `<span style="opacity:.55">Be the first to rate</span>`
     }</span>`;
 
   w.querySelectorAll('.star-btn').forEach(btn => {
@@ -962,15 +1050,12 @@ function renderWidget(el, id, votes) {
 async function submitRating(itemId, score) {
   if (!currentUser) return;
   await setDoc(doc(db, 'ratings', itemId, 'votes', currentUser.uid), {
-    score,
-    uid:         currentUser.uid,
+    score, uid: currentUser.uid,
     displayName: currentUser.displayName,
-    photoURL:    currentUser.photoURL || '',
-    updatedAt:   serverTimestamp()
+    photoURL: currentUser.photoURL || '',
+    updatedAt: serverTimestamp()
   });
 }
-
-initRatings();
 </script>
 </body>
 </html>
