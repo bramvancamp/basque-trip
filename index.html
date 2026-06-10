@@ -279,6 +279,26 @@
   }
   /* Fixed light backdrop behind everything */
   #lightbackdrop{position:fixed;inset:0;background:#faf9f6;z-index:-1;pointer-events:none}
+
+  /* ---- AUTH ---- */
+  .auth-area{display:flex;align-items:center;gap:14px;padding:0 22px;margin-left:auto;border-left:1px solid var(--line)}
+  #auth-btn{font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.18em;
+    font-size:.68rem;padding:8px 14px;border:1.5px solid var(--ink);background:transparent;
+    color:var(--ink);cursor:pointer;transition:background .15s,color .15s,border-color .15s;white-space:nowrap}
+  #auth-btn:hover{background:var(--rioja);color:#faf9f6;border-color:var(--rioja)}
+  #user-name{font-family:'Archivo Narrow';font-size:.72rem;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+
+  /* ---- RATINGS ---- */
+  .rating-widget{margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .stars{display:flex;gap:1px}
+  .star-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:var(--line);
+    padding:0 2px;transition:color .1s;line-height:1;outline:none}
+  .star-btn:not(:disabled):hover ~ .star-btn{color:var(--line) !important}
+  .star-btn:disabled{cursor:default}
+  .star-btn.active{color:var(--gold)}
+  .star-btn.hover{color:var(--gold-bright)}
+  .rating-summary{font-family:'Archivo Narrow';font-size:.74rem;color:var(--muted);letter-spacing:.06em}
+  .spot .rating-widget{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 </head>
@@ -296,6 +316,10 @@
       <a href="#surf-section"><span class="idx-n">03</span>Surf Spots</a>
       <a href="#budget-section"><span class="idx-n">04</span>Budget</a>
       <a href="#tips-section"><span class="idx-n">05</span>Tips</a>
+    </div>
+    <div class="auth-area">
+      <span id="user-name"></span>
+      <button id="auth-btn">Sign in with Google</button>
     </div>
   </div>
 </nav>
@@ -432,10 +456,10 @@
         </div>
         <div class="picks">
           <div class="pt">The Plaza Nueva crawl</div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Gure%20Toki%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Gure Toki</a></b><span class="where">Plaza Nueva</span><p>Innovative gourmet pintxos, stunning presentations. The creative benchmark of the square.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Victor%20Montes%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Víctor Montes</a></b><span class="where">Plaza Nueva</span><p>Open since 1849. Traditional Basque — outstanding grilled mushrooms and foie gras.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bar%20El%20Globo%20Bilbao" target="_blank" rel="noopener">El Globo</a></b><span class="where">Plaza Nueva</span><p>The txangurro gratinado — spider crab as a pintxo. One of the most Bilbao bites you'll eat.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Sorginzulo%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Sorginzulo</a></b><span class="where">Plaza Nueva</span><p>Order the fried calamari, plus anything from the made-to-order menu. Relaxed, reliable.</p></div>
+          <div class="pick" data-rating-id="gure-toki"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Gure%20Toki%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Gure Toki</a></b><span class="where">Plaza Nueva</span><p>Innovative gourmet pintxos, stunning presentations. The creative benchmark of the square.</p></div>
+          <div class="pick" data-rating-id="victor-montes"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Victor%20Montes%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Víctor Montes</a></b><span class="where">Plaza Nueva</span><p>Open since 1849. Traditional Basque — outstanding grilled mushrooms and foie gras.</p></div>
+          <div class="pick" data-rating-id="el-globo"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bar%20El%20Globo%20Bilbao" target="_blank" rel="noopener">El Globo</a></b><span class="where">Plaza Nueva</span><p>The txangurro gratinado — spider crab as a pintxo. One of the most Bilbao bites you'll eat.</p></div>
+          <div class="pick" data-rating-id="sorginzulo"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Sorginzulo%20Plaza%20Nueva%20Bilbao" target="_blank" rel="noopener">Sorginzulo</a></b><span class="where">Plaza Nueva</span><p>Order the fried calamari, plus anything from the made-to-order menu. Relaxed, reliable.</p></div>
         </div>
         <p style="font-family:'Archivo Narrow';font-size:.86rem;color:var(--muted);letter-spacing:.04em">≈ €35–50 each for a full crawl with drinks</p>
       </div>
@@ -449,6 +473,11 @@
         <p><span class="tag view">Hike</span><span class="tag surf">Surf · beginner</span></p>
         <p>Start the morning with the <span class="hl">Uribe Kosta coastal path</span> — a 10 km clifftop trail running from Plentzia to Sopelana along dramatic flysch sea-cliffs with views out over the Bay of Biscay. Allow 2.5–3 hours at an easy pace; the trail ends right at the beach. Then stay put: paddle straight into a <b>surf lesson at Sopelana</b> on the gentle summer beach-break. ≈ €45–55 for a 2h session.</p>
         <p>Evening, back in Bilbao: skip the bar crawl and sit down for a proper <span class="hl">txuletón</span> — the enormous bone-in Basque ribeye, charcoal-grilled, served for two. <b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Asador%20Indusi%20Bilbao" target="_blank" rel="noopener">Asador Indusi</a></b> or <b>Etxanobe</b> both deliver. ≈ €40–60 each with wine.</p>
+        <div class="picks">
+          <div class="pt">Rate the day</div>
+          <div class="pick" data-rating-id="uribe-kosta-hike"><b>Uribe Kosta Coastal Hike</b><p>Plentzia → Sopelana, ~10 km clifftop trail along the flysch sea-cliffs.</p></div>
+          <div class="pick" data-rating-id="asador-indusi"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Asador%20Indusi%20Bilbao" target="_blank" rel="noopener">Asador Indusi</a></b><span class="where">Bilbao</span><p>The txuletón dinner — bone-in Basque ribeye, charcoal-grilled, served for two.</p></div>
+        </div>
       </div>
     </div>
 
@@ -466,8 +495,10 @@
           <div class="opt"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Hotel%20Viura%20Villabuena%20de%20Alava" target="_blank" rel="noopener">Hotel Viura</a></b> (Villabuena, 10 min) — bold contemporary design, rooftop bar with vineyard views <span class="pr">~€160–220/night</span></div>
         </div>
         <div class="picks">
-          <div class="pt">Dinner</div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Restaurante%20Amelibia%20Laguardia" target="_blank" rel="noopener">Amelibia</a></b><span class="where">Laguardia</span><p>Basque-Riojan cooking, local wine list, views over the plain. Or just eat at the hotel — you're 50m from bed.</p></div>
+          <div class="pt">Wineries &amp; Dinner</div>
+          <div class="pick" data-rating-id="bodega-ysios"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bodega%20Ysios%20Laguardia" target="_blank" rel="noopener">Bodega Ysios</a></b><span class="where">Laguardia</span><p>Calatrava's wave-roofed winery against the Sierra de Cantabria. Tasting included.</p></div>
+          <div class="pick" data-rating-id="marques-de-riscal"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Marques%20de%20Riscal%20Elciego" target="_blank" rel="noopener">Marqués de Riscal</a></b><span class="where">Elciego</span><p>Gehry's titanium showpiece — the same hand as the Guggenheim, planted in a vineyard.</p></div>
+          <div class="pick" data-rating-id="amelibia"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Restaurante%20Amelibia%20Laguardia" target="_blank" rel="noopener">Amelibia</a></b><span class="where">Laguardia</span><p>Basque-Riojan cooking, local wine list, views over the plain. Or just eat at the hotel — you're 50m from bed.</p></div>
         </div>
       </div>
     </div>
@@ -485,11 +516,11 @@
         </div>
         <div class="picks">
           <div class="pt">The Parte Vieja crawl — 19:30 start</div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=La%20Cuchara%20de%20San%20Telmo%20San%20Sebastian" target="_blank" rel="noopener">La Cuchara de San Telmo</a></b><span class="where">Parte Vieja</span><p>The city's most talked-about bar. Everything cooked to order — the foie gras is the single most recommended bite in town. Arrive 19:30 sharp or wait.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Borda%20Berri%20San%20Sebastian" target="_blank" rel="noopener">Borda Berri</a></b><span class="where">Parte Vieja</span><p>La Cuchara's creative equal. Pork rib kebab, "fake" Idiazabal risotto, crispy pig's ear.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bar%20Sport%20Parte%20Vieja%20San%20Sebastian" target="_blank" rel="noopener">Bar Sport</a></b><span class="where">Parte Vieja</span><p>Sea urchin crema in the shell, seared foie. Order a vermut preparado. Come off-peak.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=La%20Vi%C3%B1a%20San%20Sebastian" target="_blank" rel="noopener">La Viña</a></b><span class="where">Parte Vieja</span><p>Birthplace of the burnt Basque cheesecake. Order a slice. Non-negotiable.</p></div>
-          <div class="pick"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Ganbara%20San%20Sebastian" target="_blank" rel="noopener">Ganbara</a></b><span class="where">Parte Vieja</span><p>Seasonal mushrooms, sautéed with egg. Produce-driven, beautiful counter.</p></div>
+          <div class="pick" data-rating-id="la-cuchara"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=La%20Cuchara%20de%20San%20Telmo%20San%20Sebastian" target="_blank" rel="noopener">La Cuchara de San Telmo</a></b><span class="where">Parte Vieja</span><p>The city's most talked-about bar. Everything cooked to order — the foie gras is the single most recommended bite in town. Arrive 19:30 sharp or wait.</p></div>
+          <div class="pick" data-rating-id="borda-berri"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Borda%20Berri%20San%20Sebastian" target="_blank" rel="noopener">Borda Berri</a></b><span class="where">Parte Vieja</span><p>La Cuchara's creative equal. Pork rib kebab, "fake" Idiazabal risotto, crispy pig's ear.</p></div>
+          <div class="pick" data-rating-id="bar-sport"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Bar%20Sport%20Parte%20Vieja%20San%20Sebastian" target="_blank" rel="noopener">Bar Sport</a></b><span class="where">Parte Vieja</span><p>Sea urchin crema in the shell, seared foie. Order a vermut preparado. Come off-peak.</p></div>
+          <div class="pick" data-rating-id="la-vina"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=La%20Vi%C3%B1a%20San%20Sebastian" target="_blank" rel="noopener">La Viña</a></b><span class="where">Parte Vieja</span><p>Birthplace of the burnt Basque cheesecake. Order a slice. Non-negotiable.</p></div>
+          <div class="pick" data-rating-id="ganbara"><b><a class="map" href="https://www.google.com/maps/search/?api=1&query=Ganbara%20San%20Sebastian" target="_blank" rel="noopener">Ganbara</a></b><span class="where">Parte Vieja</span><p>Seasonal mushrooms, sautéed with egg. Produce-driven, beautiful counter.</p></div>
         </div>
         <p style="font-family:'Archivo Narrow';font-size:.86rem;color:var(--muted);letter-spacing:.04em">≈ €50–70 each for a serious crawl with drinks</p>
       </div>
@@ -514,17 +545,17 @@
     <div class="sec-label">The Waves — Beginner Only</div>
     <h2>Summer is the <em>right</em> time to learn here.</h2>
     <div class="surf-grid">
-      <div class="spot">
+      <div class="spot" data-rating-id="sopelana-surf">
         <div class="lvl">Day 2 · 20 min from Bilbao</div>
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Sopelana%20beach%20Arrietara" target="_blank" rel="noopener">Sopelana</a></h4>
         <p>A wide sandy beach at Arrietara with gentle, rolling waves and multiple peaks made for learning. Surf schools right on the sand handle boards and wetsuits. ≈ €45–55 for a 2h lesson.</p>
       </div>
-      <div class="spot">
+      <div class="spot" data-rating-id="zurriola-surf">
         <div class="lvl">Day 4 · Gros district, San Sebastián</div>
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Zurriola+beach+San+Sebastian" target="_blank" rel="noopener">Zurriola</a></h4>
         <p>The surf beach of San Sebastián, right in the Gros neighbourhood where you're staying. More exposed than Sopelana — a step up in energy. Multiple schools on the sand. ≈ €45–55 for a 2h lesson.</p>
       </div>
-      <div class="spot">
+      <div class="spot" data-rating-id="zarautz-surf">
         <div class="lvl">Day 5 · 25 min from Donostia</div>
         <h4><a class="map" href="https://www.google.com/maps/search/?api=1&query=Zarautz%20beach" target="_blank" rel="noopener">Zarautz</a></h4>
         <p>The longest beach on the Basque coast — 2.5km, a reliable beach break working best at mid-to-high tide, and a promenade full of surf schools. Lessons ≈ €45–55.</p>
@@ -664,6 +695,115 @@
   }).addTo(map);
 
 })();
+</script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, collection, onSnapshot, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBj0nLfXLeL3sRK2v8xMPwGZCLxGY2M8Pw",
+  authDomain: "trip-512bc.firebaseapp.com",
+  projectId: "trip-512bc",
+  storageBucket: "trip-512bc.firebasestorage.app",
+  messagingSenderId: "975729936790",
+  appId: "1:975729936790:web:2dd5f173a4a47d1886f5b7"
+};
+
+const app   = initializeApp(firebaseConfig);
+const auth  = getAuth(app);
+const db    = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+let currentUser = null;
+const votesCache = {};   // itemId → votes[]
+
+// ── Auth button ───────────────────────────────────────────────────
+document.getElementById('auth-btn').addEventListener('click', async () => {
+  if (currentUser) {
+    await signOut(auth);
+  } else {
+    try { await signInWithPopup(auth, provider); }
+    catch(e) { console.error('Sign-in error', e); }
+  }
+});
+
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  const btn    = document.getElementById('auth-btn');
+  const nameEl = document.getElementById('user-name');
+  if (user) {
+    btn.textContent    = 'Sign out';
+    nameEl.textContent = user.displayName;
+    nameEl.style.display = 'inline';
+  } else {
+    btn.textContent    = 'Sign in with Google';
+    nameEl.textContent = '';
+    nameEl.style.display = 'none';
+  }
+  // Re-render all widgets so interactivity state updates
+  document.querySelectorAll('[data-rating-id]').forEach(el => {
+    const id = el.dataset.ratingId;
+    if (votesCache[id]) renderWidget(el, id, votesCache[id]);
+  });
+});
+
+// ── Ratings ───────────────────────────────────────────────────────
+function initRatings() {
+  document.querySelectorAll('[data-rating-id]').forEach(el => {
+    const id  = el.dataset.ratingId;
+    const ref = collection(db, 'ratings', id, 'votes');
+    onSnapshot(ref, snap => {
+      votesCache[id] = snap.docs.map(d => d.data());
+      renderWidget(el, id, votesCache[id]);
+    });
+  });
+}
+
+function renderWidget(el, id, votes) {
+  let w = el.querySelector('.rating-widget');
+  if (!w) { w = document.createElement('div'); w.className = 'rating-widget'; el.appendChild(w); }
+
+  const avg       = votes.length ? votes.reduce((s, v) => s + v.score, 0) / votes.length : 0;
+  const userScore = currentUser ? (votes.find(v => v.uid === currentUser.uid)?.score ?? 0) : 0;
+  const canRate   = !!currentUser;
+
+  w.innerHTML = `
+    <div class="stars">
+      ${[1,2,3,4,5].map(n =>
+        `<button class="star-btn${userScore >= n ? ' active' : ''}" data-score="${n}"${!canRate ? ' disabled' : ''}
+          title="${canRate ? `Rate ${n} star${n>1?'s':''}` : 'Sign in to rate'}">★</button>`
+      ).join('')}
+    </div>
+    <span class="rating-summary">${
+      votes.length
+        ? `${avg.toFixed(1)} ★ · ${votes.length} vote${votes.length !== 1 ? 's' : ''}`
+        : `<span style="opacity:.55">${canRate ? 'Be the first to rate' : 'Sign in to rate'}</span>`
+    }</span>`;
+
+  w.querySelectorAll('.star-btn').forEach(btn => {
+    const n = parseInt(btn.dataset.score);
+    btn.addEventListener('click',      ()  => submitRating(id, n));
+    btn.addEventListener('mouseenter', ()  => w.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('hover', i < n)));
+    btn.addEventListener('mouseleave', ()  => w.querySelectorAll('.star-btn').forEach(b => b.classList.remove('hover')));
+  });
+}
+
+async function submitRating(itemId, score) {
+  if (!currentUser) return;
+  await setDoc(doc(db, 'ratings', itemId, 'votes', currentUser.uid), {
+    score,
+    uid:         currentUser.uid,
+    displayName: currentUser.displayName,
+    photoURL:    currentUser.photoURL || '',
+    updatedAt:   serverTimestamp()
+  });
+}
+
+initRatings();
 </script>
 </body>
 </html>
