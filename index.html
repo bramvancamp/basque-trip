@@ -997,11 +997,14 @@ onAuthStateChanged(auth, async user => {
 });
 
 function updateNavAuth(user) {
+  const btn    = document.getElementById('auth-btn');
   const nameEl = document.getElementById('user-name');
   if (user) {
+    btn.textContent      = 'Sign out';
     nameEl.textContent   = user.displayName;
     nameEl.style.display = 'inline';
   } else {
+    btn.textContent      = 'Sign in with Google';
     nameEl.textContent   = '';
     nameEl.style.display = 'none';
   }
