@@ -280,6 +280,29 @@
   /* Fixed light backdrop behind everything */
   #lightbackdrop{position:fixed;inset:0;background:#faf9f6;z-index:-1;pointer-events:none}
 
+  /* ---- EVENTS ---- */
+  .events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px}
+  .event-card{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--ink);padding:24px;border-radius:4px;display:flex;flex-direction:column;gap:8px}
+  .event-card.during{border-top-color:var(--rioja)}
+  .event-card.nearby{border-top-color:var(--sea);opacity:.82}
+  .event-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .event-type{font-family:'Archivo Narrow';font-size:.64rem;text-transform:uppercase;letter-spacing:.18em;font-weight:700;padding:3px 8px;border-radius:2px}
+  .event-type.jazz{background:var(--ink);color:var(--paper)}
+  .event-type.nightlife{background:var(--sea-deep);color:var(--paper)}
+  .event-type.wine{background:var(--rioja);color:var(--paper)}
+  .event-type.surf{background:var(--sea);color:var(--paper)}
+  .event-type.festival{background:var(--gold);color:var(--paper)}
+  .event-dates{font-family:'Archivo Narrow';font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+  .event-card h4{font-family:'Fraunces';font-size:1.3rem;font-weight:500;color:var(--ink);line-height:1.1}
+  .event-loc{font-family:'Archivo Narrow';font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;color:var(--sea);font-weight:700}
+  .event-loc span{color:var(--muted);font-weight:400;text-transform:none;letter-spacing:.04em}
+  .event-card p{font-size:.92rem;color:var(--body);line-height:1.6;flex:1}
+  .event-flag{margin-top:6px;font-family:'Archivo Narrow';font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+  .event-flag.on{color:var(--rioja)}
+  .event-flag.close{color:var(--sea)}
+  .events-note{margin-top:28px;font-family:'Fraunces';font-style:italic;font-size:1.05rem;color:#2f3a28;max-width:72ch}
+  @media(max-width:780px){.events-grid{grid-template-columns:1fr}}
+
   /* ---- AUTH ---- */
   .auth-area{display:flex;align-items:center;gap:14px;padding:0 22px;margin-left:auto;border-left:1px solid var(--line)}
   #auth-btn{font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.18em;
@@ -316,6 +339,7 @@
       <a href="#surf-section"><span class="idx-n">03</span>Surf Spots</a>
       <a href="#budget-section"><span class="idx-n">04</span>Budget</a>
       <a href="#tips-section"><span class="idx-n">05</span>Tips</a>
+      <a href="#events-section"><span class="idx-n">06</span>Events</a>
     </div>
     <div class="auth-area">
       <span id="user-name"></span>
@@ -595,6 +619,104 @@
       <div class="tip"><div class="ico">v.</div><h4>Pour the txakoli high</h4><p>The local fizzy white is poured from height to aerate it. Order it everywhere; it's made for pintxos.</p></div>
       <div class="tip"><div class="ico">vi.</div><h4>One car, from the start</h4><p>Same arrival airport — coordinate flight times and split the rental from the moment you both land.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events-section">
+  <div class="wrap">
+    <div class="sec-label">What's On</div>
+    <h2>Events during <em>the trip</em></h2>
+
+    <div class="events-grid">
+
+      <!-- Jazz Vitoria -->
+      <div class="event-card during">
+        <div class="event-meta">
+          <span class="event-type jazz">Jazz</span>
+          <span class="event-dates">~14–19 Jul · verify 2026 dates</span>
+        </div>
+        <h4>Festival de Jazz de Vitoria-Gasteiz</h4>
+        <div class="event-loc">Vitoria-Gasteiz <span>· 60 km from Bilbao · 45 min drive</span></div>
+        <p>One of Europe's great jazz festivals, running for 50+ years. Free daytime concerts pack the Plaza de España; paid evening headline sets bring world-class names. Perfectly combinable with the Rioja Alavesa day — it's a 45-minute drive from Laguardia.</p>
+        <div class="event-flag on">✦ Overlaps your trip</div>
+      </div>
+
+      <!-- Pintxo-Pote -->
+      <div class="event-card during">
+        <div class="event-meta">
+          <span class="event-type nightlife">Nightlife</span>
+          <span class="event-dates">Every Thursday evening</span>
+        </div>
+        <h4>Pintxo-Pote Thursday</h4>
+        <div class="event-loc">Bilbao Casco Viejo &amp; San Sebastián Parte Vieja <span>· your base</span></div>
+        <p>The most social night of the week in both cities. Bars offer a pintxo + txakoli or beer for €1–2. The entire old town fills up from 19:30. Thu 16 Jul falls in Bilbao; if you're still in San Sebastián on Thu 23 Jul you'll catch it there too. Don't miss it.</p>
+        <div class="event-flag on">✦ Thu 16 Jul — Bilbao</div>
+      </div>
+
+      <!-- Laguardia evenings -->
+      <div class="event-card during">
+        <div class="event-meta">
+          <span class="event-type wine">Wine &amp; Culture</span>
+          <span class="event-dates">Summer weekends · Jul–Aug</span>
+        </div>
+        <h4>Laguardia Summer Evenings</h4>
+        <div class="event-loc">Laguardia <span>· your Day 3 base</span></div>
+        <p>The medieval walled town comes alive on summer Friday and Saturday nights — live folk and jazz in the main square, local wine poured from the barrel, stalls selling Rioja products. You're sleeping inside the walls, so you just walk downstairs.</p>
+        <div class="event-flag on">✦ Fri 18 Jul — you're there</div>
+      </div>
+
+      <!-- Zarautz beach -->
+      <div class="event-card during">
+        <div class="event-meta">
+          <span class="event-type surf">Surf &amp; Beach</span>
+          <span class="event-dates">Throughout July</span>
+        </div>
+        <h4>Zarautz Summer Beach Events</h4>
+        <div class="event-loc">Zarautz <span>· Day 5 · 25 min from San Sebastián</span></div>
+        <p>Zarautz hosts surf competitions and beach parties across July and August — the promenade bars run late and the beach stays busy after dark. Your final morning surf session on Day 5 may land mid-competition, which makes for great spectating between waves.</p>
+        <div class="event-flag on">✦ Sun 20 Jul — your last morning</div>
+      </div>
+
+      <!-- La Concha concerts -->
+      <div class="event-card during">
+        <div class="event-meta">
+          <span class="event-type festival">Outdoor Music</span>
+          <span class="event-dates">July &amp; August evenings</span>
+        </div>
+        <h4>San Sebastián Summer Concert Series</h4>
+        <div class="event-loc">La Concha Promenade &amp; Zurriola <span>· San Sebastián</span></div>
+        <p>Free outdoor concerts run along the waterfront throughout the summer — local bands, jazz combos, and occasional bigger acts on temporary stages. Check the Donostia Kultura listings when you arrive. A relaxed way to end an evening after the pintxos crawl.</p>
+        <div class="event-flag on">✦ Sat–Sun 18–19 Jul</div>
+      </div>
+
+      <!-- Jazzaldia — just after -->
+      <div class="event-card nearby">
+        <div class="event-meta">
+          <span class="event-type jazz">Jazz</span>
+          <span class="event-dates">~22–27 Jul · starts 2 days after you leave</span>
+        </div>
+        <h4>Jazzaldia — San Sebastián Jazz Festival</h4>
+        <div class="event-loc">San Sebastián <span>· your final base</span></div>
+        <p>One of the world's most prestigious jazz festivals, held on the waterfront stages of La Concha. Past headliners: Pat Metheny, Diana Krall, Herbie Hancock. You fly out on the 20th — staying two extra days would put you right in the opening weekend.</p>
+        <div class="event-flag close">↗ Starts 2 days after your flight</div>
+      </div>
+
+      <!-- BBK Live — just before -->
+      <div class="event-card nearby">
+        <div class="event-meta">
+          <span class="event-type festival">Festival</span>
+          <span class="event-dates">~10–12 Jul · 3 days before you arrive</span>
+        </div>
+        <h4>Bilbao BBK Live</h4>
+        <div class="event-loc">Monte Cobetas, Bilbao <span>· 20 min from Casco Viejo</span></div>
+        <p>Bilbao's major rock and electronic festival on a hilltop overlooking the city. Past lineups have included Arctic Monkeys, Massive Attack, Rosalía. Arriving three days earlier would cover the full festival before the road trip begins.</p>
+        <div class="event-flag close">↗ Ends 3 days before your flight in</div>
+      </div>
+
+    </div>
+
+    <p class="events-note">Dates above are based on typical annual scheduling — always confirm the 2026 programme on each festival's official site before booking anything around them.</p>
   </div>
 </section>
 
