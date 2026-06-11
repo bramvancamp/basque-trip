@@ -31,6 +31,7 @@
     --gold-bright:#a4ac86; /* light olive for accents on dark */
     --line:#cdd2bd;        /* olive-tinted hairline */
     --muted:#5a6150;       /* muted sage-grey, passes contrast */
+    --amber:#9c6a16;       /* warm amber — secondary accent: sights, highlights, 'nearby' */
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;background:#faf9f6 !important;min-height:100%}
@@ -66,7 +67,7 @@
     display:flex;flex-direction:column;justify-content:space-between;
     padding:38px 28px 46px;position:relative;
     background:
-      radial-gradient(ellipse at 75% 15%, rgba(192,138,45,.16), transparent 55%),
+      radial-gradient(ellipse at 75% 15%, rgba(156,106,22,.14), transparent 55%),
       linear-gradient(160deg,#faf9f6 0%, #f2f3ea 55%, #e8ebdd 100%);
     border-bottom:2px solid var(--ink);
     overflow:hidden;
@@ -267,16 +268,16 @@
 
   /* ---- MAP SECTION ---- */
   .mapsec{border-bottom:2px solid var(--ink);background:var(--paper)}
-  .mapsec .wrap{padding-top:60px;padding-bottom:0}
+  .mapsec .wrap{padding-top:0;padding-bottom:0} /* section shell already provides 84px */
   #trip-map{width:100%;height:480px;border:1.5px solid var(--line);
     border-radius:3px;margin-top:28px;z-index:2;position:relative}
   .map-legend{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:18px;
-    padding-bottom:54px;font-family:'Archivo Narrow';font-size:.78rem;
+    font-family:'Archivo Narrow';font-size:.78rem;
     text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
   .map-legend span{display:flex;align-items:center;gap:8px}
   .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
   .dot.stop{background:var(--rioja)}
-  .dot.sight{background:var(--sea)}
+  .dot.sight{background:var(--amber)}
   .dot.surf{background:#5c8c5a}
 
   @media(max-width:780px){
@@ -284,6 +285,16 @@
     .index-links a{padding:12px 16px;font-size:.82rem}
     #trip-map{height:320px}
   }
+
+  /* ---- LEAFLET SKIN — match the dossier aesthetic ---- */
+  .leaflet-container{font-family:'Mulish',sans-serif}
+  .leaflet-popup-content-wrapper{background:var(--paper);color:var(--body);border:1.5px solid var(--ink);
+    border-radius:3px;box-shadow:0 4px 18px rgba(28,43,26,.18)}
+  .leaflet-popup-content{margin:14px 16px;line-height:1.55;font-size:.9rem;font-family:'Mulish',sans-serif}
+  .leaflet-popup-content b{font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;color:var(--ink)}
+  .leaflet-popup-tip{background:var(--paper);box-shadow:none;border:1.5px solid var(--ink);border-top:none;border-left:none}
+  .leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+  .leaflet-container a.leaflet-popup-close-button:hover{color:var(--ink)}
   /* Fixed light backdrop behind everything */
   #lightbackdrop{position:fixed;inset:0;background:#faf9f6;z-index:-1;pointer-events:none}
   /* Lock page scroll while a full-screen overlay is up */
@@ -293,7 +304,7 @@
   .events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px}
   .event-card{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--ink);padding:24px;border-radius:4px;display:flex;flex-direction:column;gap:8px}
   .event-card.during{border-top-color:var(--rioja)}
-  .event-card.nearby{border-top-color:var(--sea);opacity:.82}
+  .event-card.nearby{border-top-color:var(--amber)} /* full opacity — dimming killed text contrast */
   .event-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .event-type{font-family:'Archivo Narrow';font-size:.64rem;text-transform:uppercase;letter-spacing:.18em;font-weight:700;padding:3px 8px;border-radius:2px}
   .event-type.jazz{background:var(--ink);color:var(--paper)}
@@ -308,12 +319,18 @@
   .event-card p{font-size:.92rem;color:var(--body);line-height:1.6;flex:1}
   .event-flag{margin-top:6px;font-family:'Archivo Narrow';font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
   .event-flag.on{color:var(--rioja)}
-  .event-flag.close{color:var(--sea)}
+  .event-flag.close{color:var(--amber)}
   .events-note{margin-top:28px;font-family:'Fraunces';font-style:italic;font-size:1.05rem;color:#2f3a28;max-width:72ch}
   #events-map{width:100%;height:380px;border:1.5px solid var(--line);border-radius:3px;margin-top:28px;z-index:2;position:relative}
   @media(max-width:780px){.events-grid{grid-template-columns:1fr}#events-map{height:260px}}
 
   /* ---- LOGIN OVERLAY ---- */
+  #login-overlay,#pending-overlay{transition:opacity .3s,visibility .3s}
+  .overlay-hidden{opacity:0 !important;visibility:hidden !important;pointer-events:none !important}
+  /* same paper grain as the page body */
+  #login-overlay::before,#pending-overlay::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
   #login-overlay{position:fixed;inset:0;background:#faf9f6;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;padding:40px}
   .login-box{max-width:440px;width:100%;text-align:center}
   .login-box .kicker{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.34em;font-size:.78rem;font-weight:700;color:var(--rioja);margin-bottom:20px}
@@ -334,7 +351,7 @@
   .login-error{margin-top:16px;font-family:'Archivo Narrow';font-size:.8rem;letter-spacing:.04em;color:#9a3a3a}
 
   /* ---- PENDING OVERLAY ---- */
-  #pending-overlay{position:fixed;inset:0;background:#faf9f6;z-index:1000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:0;padding:40px}
+  #pending-overlay{position:fixed;inset:0;background:#faf9f6;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;padding:40px}
   .pending-box{max-width:440px;width:100%;text-align:center}
   .pending-box .kicker{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.34em;font-size:.78rem;font-weight:700;color:var(--sea);margin-bottom:20px}
   .pending-box h2{font-family:'Fraunces';font-weight:400;font-size:2.2rem;line-height:1.05;margin-bottom:10px}
@@ -355,9 +372,10 @@
   /* ---- RATINGS ---- */
   .rating-widget{margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .stars{display:flex;gap:1px}
-  .star-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:var(--line);
-    padding:0 2px;transition:color .1s;line-height:1;outline:none}
-  .star-btn:not(:disabled):hover ~ .star-btn{color:var(--line) !important}
+  .star-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:#b8bfa4;
+    padding:0 2px;transition:color .1s;line-height:1}
+  .star-btn:focus-visible{outline:2px solid var(--rioja);outline-offset:2px;border-radius:2px}
+  .star-btn:not(:disabled):hover ~ .star-btn{color:#b8bfa4 !important}
   .star-btn:disabled{cursor:default}
   .star-btn.active{color:var(--gold)}
   .star-btn.hover{color:var(--gold-bright)}
@@ -377,9 +395,11 @@
   /* ---- BACK TO TOP ---- */
   #back-to-top{position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;
     background:var(--ink);color:var(--paper);border:none;font-size:1.2rem;line-height:1;
-    cursor:pointer;z-index:500;display:none;align-items:center;justify-content:center;
-    box-shadow:0 2px 14px rgba(0,0,0,.25);transition:background .15s}
-  #back-to-top.visible{display:flex}
+    cursor:pointer;z-index:500;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 14px rgba(0,0,0,.25);
+    opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;
+    transition:opacity .25s,transform .25s,visibility .25s,background .15s}
+  #back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
   #back-to-top:hover{background:var(--rioja)}
 
   /* ---- SCORES SUMMARY ---- */
@@ -474,7 +494,7 @@
 </div>
 
 <!-- PENDING OVERLAY -->
-<div id="pending-overlay">
+<div id="pending-overlay" class="overlay-hidden">
   <div class="pending-box">
     <div class="kicker">Pending Approval</div>
     <h2>Request received</h2>
@@ -831,9 +851,9 @@
     <h2>Events during <em>the trip</em></h2>
 
     <div id="events-map"></div>
-    <div class="map-legend" style="padding-bottom:34px">
+    <div class="map-legend">
       <span><div class="dot stop"></div> During trip</span>
-      <span><div class="dot" style="background:var(--sea)"></div> Just outside window</span>
+      <span><div class="dot" style="background:var(--amber)"></div> Just outside window</span>
     </div>
 
     <div class="events-grid">
@@ -1003,7 +1023,7 @@ lazyInitMap('trip-map', function(){
   }
 
   var stopColor  = '#2d4a2b';  // forest green  — base stops
-  var sightColor = '#5c6a4f';  // sage           — sights/wineries
+  var sightColor = '#9c6a16';  // amber (--amber) — sights/wineries
   var surfColor  = '#5c8c5a';  // lighter green  — surf spots
 
   // ---- BASE STOPS (large) ----
@@ -1083,7 +1103,7 @@ lazyInitMap('events-map', function(){
   }
 
   var during = '#2d4a2b';
-  var nearby = '#5c6a4f';
+  var nearby = '#9c6a16';  // amber (--amber) — matches 'nearby' card accents
 
   var events = [
     [42.8467, -2.6727, 'Festival de Jazz de Vitoria-Gasteiz', '~14–19 Jul · overlaps your trip', during, 18],
@@ -1133,9 +1153,9 @@ const votesCache = {};
 const loginOverlay   = document.getElementById('login-overlay');
 const pendingOverlay = document.getElementById('pending-overlay');
 
-function showLogin()   { loginOverlay.style.display='flex'; pendingOverlay.style.display='none'; document.body.classList.add('overlay-open'); }
-function showPending() { loginOverlay.style.display='none'; pendingOverlay.style.display='flex'; document.body.classList.add('overlay-open'); }
-function showSite()    { loginOverlay.style.display='none'; pendingOverlay.style.display='none'; document.body.classList.remove('overlay-open'); }
+function showLogin()   { loginOverlay.classList.remove('overlay-hidden'); pendingOverlay.classList.add('overlay-hidden'); document.body.classList.add('overlay-open'); }
+function showPending() { loginOverlay.classList.add('overlay-hidden'); pendingOverlay.classList.remove('overlay-hidden'); document.body.classList.add('overlay-open'); }
+function showSite()    { loginOverlay.classList.add('overlay-hidden'); pendingOverlay.classList.add('overlay-hidden'); document.body.classList.remove('overlay-open'); }
 
 showLogin(); // hide site until auth resolves
 
