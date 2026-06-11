@@ -7,9 +7,14 @@
 <meta name="supported-color-schemes" content="light">
 <meta name="theme-color" content="#faf9f6">
 <title>The Basque Run — A 6-Day Road Trip</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%232d4a2b'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23faf9f6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Mulish:wght@300;400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://a.basemaps.cartocdn.com">
+<link rel="preconnect" href="https://b.basemaps.cartocdn.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Mulish:wght@400;500;700&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     color-scheme:light only;
@@ -963,7 +968,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-(function(){
+// Init a Leaflet map only when its container approaches the viewport,
+// so tiles don't download behind the login overlay / far below the fold.
+function lazyInitMap(containerId, init){
+  var el = document.getElementById(containerId);
+  if (!('IntersectionObserver' in window)) { init(); return; }
+  var io = new IntersectionObserver(function(entries){
+    if (entries.some(function(e){ return e.isIntersecting; })) { io.disconnect(); init(); }
+  }, { rootMargin: '200px' });
+  io.observe(el);
+}
+
+lazyInitMap('trip-map', function(){
   var map = L.map('trip-map', {
     center: [43.05, -2.45],
     zoom: 8,
@@ -1046,11 +1062,11 @@
     dashArray: '6 5'
   }).addTo(map);
 
-})();
+});
 </script>
 
 <script>
-(function(){
+lazyInitMap('events-map', function(){
   var map = L.map('events-map', { center: [43.0, -2.5], zoom: 8, scrollWheelZoom: false, dragging: !L.Browser.mobile });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
@@ -1084,7 +1100,7 @@
       .addTo(map)
       .bindPopup('<b>'+e[2]+'</b><br><span style="font-size:.85em;color:#5a6150">'+e[3]+'</span>');
   });
-})();
+});
 </script>
 
 <script type="module">
