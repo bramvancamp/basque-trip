@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A single-file static trip planning page (`index.html`) for a 5-day Basque Country road trip (15–20 Jul 2026). No build step, no dependencies to install. Deployed via GitHub Pages at https://bramvancamp.github.io/basque-trip.
+A single-file static trip planning page (`index.html`) for a 6-day Basque Country road trip (15–20 Jul 2026). No build step, no dependencies to install. Deployed via GitHub Pages at https://bramvancamp.github.io/basque-trip.
 
 ## Development
 
